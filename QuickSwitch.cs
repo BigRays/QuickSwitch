@@ -1180,9 +1180,13 @@ namespace QuickSwitch
             Location = new Point(x, y);
 
             closeTimer = new Timer();
-            closeTimer.Interval = 2000;
+            closeTimer.Interval = 5000;
             closeTimer.Tick += new EventHandler(delegate { closeTimer.Stop(); Close(); });
             closeTimer.Start();
+
+            // 鼠标悬停在气泡上时暂停倒计时，移开后重新计时，方便看清或复制长路径
+            label.MouseEnter += new EventHandler(delegate { closeTimer.Stop(); });
+            label.MouseLeave += new EventHandler(delegate { closeTimer.Start(); });
 
             FormClosed += new FormClosedEventHandler(delegate(object s, FormClosedEventArgs e)
             {
